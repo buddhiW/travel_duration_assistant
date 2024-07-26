@@ -1,2 +1,9 @@
-# travel_duration_assistant
+# AI Agent for Travel Duration
+
+# This repository contains codes for an AI agent that provides real-time travel duration information between two locations for a given mode of transportation.
+
+# The application leverages OpenAI's Chat Completions API for natural language processing and Google Maps Distance Matrix API for accurate travel duration calculation.
+
+
+
  
