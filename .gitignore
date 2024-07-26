@@ -1,0 +1,9 @@
+# Environment
+.env
+.venv/
+
+# test files
+.ipynb
+
+# text files
+.txt

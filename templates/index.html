@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prompt/Answer</title>
+</head>
+<body>
+    <h1>Ask a Question</h1>
+    <form method="POST">
+        <input type="text" name="question" placeholder="Enter your question", size="100">
+        <button type="submit">Submit</button>
+    </form>
+    {% if answer %}
+        <h2>Answer:</h2>
+        <p>{{ answer }}</p>
+    {% endif %}
+</body>
+</html>
