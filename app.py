@@ -1,3 +1,9 @@
+"""
+Author: Buddhi W
+Date: 07/25/2024
+Main script that runs the web UI for the AI agent.
+"""
+
 from flask import Flask, request, render_template
 from assistant_utils import run_assistant
 

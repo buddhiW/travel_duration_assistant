@@ -25,7 +25,7 @@ def get_user_input(user_query: str) -> str:
     Returns:
     str: Processed query.
     """
-
+    # OpenAI API call
     completion = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
@@ -48,12 +48,13 @@ def parse_user_input(user_query: str) -> (tuple[str, str, str] | str):
     Returns:
     tuple: Extracted information.
     """
-
+    # API call reads the user query and returns origin, destination and mode in a single string
     user_input = get_user_input(user_query)
 
     if user_input == 'OutOfContext':
         return user_input
 
+    # Splitting the string and extract information
     data = user_input.split('\n')
     origin = data[0].split(':')[1].strip()
     destination = data[1].split(':')[1].strip()
@@ -84,8 +85,10 @@ def get_travel_duration(origin:str, destination:str, mode:str) -> tuple[str, lis
         "key": api_key
     }
 
+    # Google Maps API call
     response = requests.get(url, params=params).json()
 
+    # Handling incomplete queries and recording corresponding error messages
     error_messages = []
     if not response['destination_addresses'][0]:
         error_messages.append('Please provide valid destination address.')
@@ -96,6 +99,7 @@ def get_travel_duration(origin:str, destination:str, mode:str) -> tuple[str, lis
     if mode == 'None':
         error_messages.append('Please provide valid mode of transportation')
 
+    # Computing duration for valid inputs
     if response['status'] == 'OK' and response['rows'][0]['elements'][0]['status'] == 'OK':
         duration = response['rows'][0]['elements'][0]['duration']['text']
         return duration, error_messages
@@ -117,6 +121,7 @@ def generate_output(origin:str, destination:str, mode:str, duration:str) -> str:
     str: Output message.
     """
     
+    # This API call combines computed information into a natural language output
     completion = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
@@ -138,6 +143,7 @@ def generate_output_error(error_messages: list) -> str:
     str: Error message in natural language.
     """
 
+    # This API call generates natural language error messages using the list of errors given as input to the function
     prompt = f"Combine the given error messages: {error_messages} into a clear and concise error message"
 
     completion = client.chat.completions.create(
@@ -170,7 +176,7 @@ def run_assistant(user_query: str) -> str:
         if duration:
             output = generate_output(user_input[0], user_input[1], user_input[2], duration)
         else:
-            output = generate_output_error(error)
+            output = generate_output_error(error) # Invoke error output if the duration is not computed
 
     return output
 
