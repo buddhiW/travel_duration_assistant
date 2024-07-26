@@ -54,7 +54,7 @@ def parse_user_input(user_query: str) -> (tuple[str, str, str] | str):
     if user_input == 'OutOfContext':
         return user_input
 
-    # Splitting the string and extract information
+    # Splitting the string and extracting information
     data = user_input.split('\n')
     origin = data[0].split(':')[1].strip()
     destination = data[1].split(':')[1].strip()
